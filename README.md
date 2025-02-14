@@ -209,5 +209,3 @@ Isso garantirá que o script seja iniciado automaticamente ao ligar o sistema.
 ----------
 
 Agora o **Google Meet será gravado e transcrito automaticamente**, sem precisar de ações manuais! 🚀
-
-Se precisar de ajustes, me avise! 😃
