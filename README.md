@@ -108,6 +108,8 @@ sudo apt update && sudo apt install obs-studio -y
     - Na seção de `Recording` no campo `Recording Path` adicione o `~/Videos/Meet`.
     - Clique em `Apply` e `Ok`.
 
+Não esqueça de adicionar o `OBS` no `Startup Applications`
+
 ----------
 
 ## ✅ 5. Configurar a API da OpenAI
