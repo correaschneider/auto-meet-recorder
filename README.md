@@ -184,7 +184,7 @@ O Ubuntu requer que scripts executáveis estejam em diretórios do sistema para 
 2. Adicione a linha:
 
     ```bash
-    @reboot meet_and_obs &
+    @reboot python3 /bin/meet_and_obs.py &
     
     ```
 
@@ -196,7 +196,7 @@ O Ubuntu requer que scripts executáveis estejam em diretórios do sistema para 
 4. No campo `Command`, insira:
 
     ```bash
-    meet_and_obs
+    python3 meet_and_obs.py
     ```
 
 5. No campo `Comment`, insira uma descrição, como `Inicia a gravação automática do Google Meet`.
