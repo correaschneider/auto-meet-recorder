@@ -161,14 +161,14 @@ O Ubuntu requer que scripts executáveis estejam em diretórios do sistema para 
 2. Crie um link simbólico em `/bin`:
 
     ```bash
-    sudo ln -s /caminho/para/meet_and_obs.py /bin/meet_and_obs
+    sudo ln -s /caminho/para/meet_and_obs.py /bin/meet_and_obs.py
     
     ```
 
 3. Agora o script pode ser executado apenas com:
 
     ```bash
-    meet_and_obs
+    python3 /bin/meet_and_obs.py
     
     ```
 
