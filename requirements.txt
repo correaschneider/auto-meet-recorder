@@ -1,0 +1,5 @@
+openai>=1.63.0
+obsws-python>=1.7.1
+requests>=2.32.3
+python-dotenv>=1.0.1
+pydub>=0.25.1
