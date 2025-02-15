@@ -13,12 +13,11 @@ Antes de executar o script, certifique-se de que seu sistema tem os seguintes pa
 Execute o seguinte comando no terminal:
 
 ```bash
-sudo apt update && sudo apt install ffmpeg xdg-utils -y
+sudo apt update && sudo apt install ffmpeg -y
 
 ```
 
 - **`ffmpeg`** → Extrai o áudio do vídeo.
-- **`xdg-utils`** → Abre automaticamente arquivos formatados.
 
 ### 📌 Instalar o Google Chrome ou Brave
 
@@ -122,17 +121,17 @@ O script usa a **API Whisper da OpenAI** para transcrição.
 
     ```python
     OPENAI_API_KEY = "SUA_CHAVE_AQUI"
-    
+
     ```
 
 ----------
 
 ## ✅ 6. Executar o Script
 
-Agora que tudo está configurado, basta rodar:
+Agora que tudo está configurado, acesse a pasta do projeto e rode o comando:
 
 ```bash
-python3 meet_and_obs.py
+python3 src/main.py
 
 ```
 
@@ -208,4 +207,55 @@ Isso garantirá que o script seja iniciado automaticamente ao ligar o sistema.
 
 ----------
 
-Agora o **Google Meet será gravado e transcrito automaticamente**, sem precisar de ações manuais! 🚀
+# 📌 Rodando o Executável
+
+## Configurando o .bashrc para rodar o script
+
+Adicione as seguintes linhas ao seu arquivo `~/.bashrc`:
+
+```bash
+# Meet Recorder
+export OBS_HOST="localhost"
+export OBS_PORT="4455"
+export OBS_PASSWORD=""
+export OPENAI_API_KEY="sua-chave-aqui"
+export SAVE_DIR="~/Videos/Meet"
+export BROWSER_API="http://localhost:9222/json"
+```
+
+Reinicie o terminal:
+
+```bash
+source ~/.bashrc
+
+```
+
+## Rodando o script
+
+Dê as permissões de execução ao script:
+
+```bash
+chmod +x /caminho/para/meet-recorder
+
+```
+
+Agora o script pode ser executado apenas com:
+
+```bash
+./caminho/para/meet-recorder
+
+```
+
+Crie um link simbólico para o script:
+
+```bash
+sudo ln -s /caminho/para/meet-recorder /bin/meet-recorder
+
+```
+
+Agora o script pode ser executado apenas com:
+
+```bash
+meet-recorder
+
+```
