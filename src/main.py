@@ -1,16 +1,17 @@
 import time
 from services.meet_detector import MeetDetector
 from factories.service_factory import ServiceFactory
+from services.system_validator import SystemValidator
+import sys
 
 class MeetMonitor:
-    def __init__(self):
-        self.factory = ServiceFactory()
-        self.notifier = self.factory.create_notification_service()
-        self.obs = self.factory.create_obs_controller()
-        self.recording_manager = self.factory.create_recording_manager(self.notifier)
-        self.audio_extractor = self.factory.create_audio_extractor(self.notifier)
-        self.transcriber = self.factory.create_transcriber(self.notifier)
-        self.formatter = self.factory.create_formatter(self.notifier)
+    def __init__(self, notifier, recording_manager, audio_extractor, transcriber, formatter, obs):
+        self.notifier = notifier
+        self.recording_manager = recording_manager
+        self.audio_extractor = audio_extractor
+        self.transcriber = transcriber
+        self.formatter = formatter
+        self.obs = obs
 
     def run(self):
         while True:
@@ -44,6 +45,47 @@ class MeetMonitor:
 
             time.sleep(5)
 
-if __name__ == "__main__":
-    monitor = MeetMonitor()
+def main(notified: bool = False):
+    # Valida os requisitos do sistema
+    is_valid, errors = SystemValidator.validate_all()
+    if not is_valid:
+        if not notified:
+            notifier = ServiceFactory.create_notification_service()
+            title = "\n🚫 Erro: O sistema não atende aos requisitos necessários:"
+            print(title)
+            messages = []
+            for error in errors:
+                messages.append(error)
+            print(error)
+            footer = "\nPor favor, corrija os erros acima e tente novamente.\nVerifique no README como instalar os requisitos necessários."
+            messages.append(footer)
+            print(footer)
+            notifier.send_error(title, "\n".join(messages))
+        time.sleep(3)
+        main(True)
+        return None
+
+    print("✅ Todas as validações passaram! Iniciando o monitor...")
+    
+    # Cria as instâncias dos serviços
+    notifier = ServiceFactory.create_notification_service()
+    recording_manager = ServiceFactory.create_recording_manager(notifier)
+    audio_extractor = ServiceFactory.create_audio_extractor(notifier)
+    transcriber = ServiceFactory.create_transcriber(notifier)
+    formatter = ServiceFactory.create_formatter(notifier)
+    obs = ServiceFactory.create_obs_controller()
+
+    # Inicia o monitor
+    monitor = MeetMonitor(
+        notifier=notifier,
+        recording_manager=recording_manager,
+        audio_extractor=audio_extractor,
+        transcriber=transcriber,
+        formatter=formatter,
+        obs=obs
+    )
+    
     monitor.run()
+
+if __name__ == "__main__":
+    main(False)
