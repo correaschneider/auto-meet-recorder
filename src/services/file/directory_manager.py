@@ -5,16 +5,24 @@ from config.settings import SAVE_DIR
 class DirectoryManager:
     @staticmethod
     def create_meet_directory(meet_title: str) -> str:
-        """Cria e retorna o diretório específico para a reunião."""
-        meet_dir = os.path.join(SAVE_DIR, meet_title.replace(' ', '_'))
+        """
+        Cria e retorna o diretório específico para a reunião.
+        Se o diretório já existir, adiciona um número incremental.
+        """
+        base_dir = meet_title.replace(' ', '_')
+        meet_dir = os.path.join(SAVE_DIR, base_dir)
+        
+        # Se o diretório já existe, adiciona um número incremental
+        counter = 1
+        while os.path.exists(meet_dir):
+            meet_dir = os.path.join(SAVE_DIR, f"{base_dir}_{counter}")
+            counter += 1
+        
         os.makedirs(meet_dir, exist_ok=True)
         return meet_dir
 
     @staticmethod
     def get_video_path(meet_dir: str) -> str:
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print('os.path.join(meet_dir, "video.mkv")', os.path.join(meet_dir, "video.mkv"))
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>')
         return os.path.join(meet_dir, "video.mkv")
 
     @staticmethod
